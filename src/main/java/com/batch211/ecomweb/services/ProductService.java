@@ -1,4 +1,4 @@
-package com.batch211.services;
+package com.batch211.ecomweb.services;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -6,14 +6,14 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.batch211.entities.Product;
+import com.batch211.ecomweb.entities.Product;
 @Service
 public class ProductService {
 	List<Product> products =new ArrayList<Product>(Arrays.asList(
-			new Product(1,"Soap",20),
-			new Product(2, "Biscuit",10)				
+			new Product(1l,"Soap",20.0),
+			new Product(2l, "Biscuit",10.2)				
 			));
-  
+   
 	public List<Product> getAllProducts() {
 		return products;
 	}
@@ -29,10 +29,10 @@ public class ProductService {
 				if(product.getName()!=null) {
 					p.setName(product.getName());
 				}
-				if(product.getId()>=0) {
+				if(product.getId()!=null) {
 					p.setId(product.getId());
 				}
-				if(product.getPrice()>=0) {
+				if(product.getPrice()!=null) {
 					p.setPrice(product.getPrice());
 				}
 			}
@@ -40,13 +40,13 @@ public class ProductService {
 		return product;
 	}
 	public boolean deleteProduct(int id) {
-		int pId=0;
+		Product searchP=null;
 		for (Product p : products) {
 			if(p.getId()==id) 
-				pId = p.getId();
+				searchP=p;
 		}
-		if(pId!=0) {
-			products.remove(pId);
+		if(searchP!=null) {
+			products.remove(searchP);
 			return true;
 		}
 		else {
