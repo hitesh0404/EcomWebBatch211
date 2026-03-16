@@ -18,7 +18,9 @@ public class Product implements Comparable<Product>{
 	
 	@Column(name = "price")
 	private Double price;
-	
+	public Product() {
+		// TODO Auto-generated constructor stub
+	}
 	public Product(Long id,String name,Double price) {
 		this.id = id;
 		this.name = name;

@@ -1,30 +1,25 @@
 package com.batch211.ecomweb.services;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.batch211.ecomweb.entities.Product;
+import com.batch211.ecomweb.repositories.ProductRepo;
+
 @Service
 public class ProductService {
-	List<Product> products =new ArrayList<Product>(Arrays.asList(
-			new Product(1l,"Soap",20.0),
-			new Product(2l, "Biscuit",10.2)				
-			));
-   
+	@Autowired
+	ProductRepo repo;
 	public List<Product> getAllProducts() {
-		return products;
+		return repo.findAll();
 	}
 	
 	public Product addProduct(Product product) {
-		products.add(product);
-		return product;
+		return repo.save(product);
 	}
 	
 	public Product updateProduct(int id,Product product) {
-		for (Product p : products) {
+		for (Product p : repo.findAll()) {
 			if(p.getId()==id) {
 				if(product.getName()!=null) {
 					p.setName(product.getName());
@@ -35,18 +30,20 @@ public class ProductService {
 				if(product.getPrice()!=null) {
 					p.setPrice(product.getPrice());
 				}
+				repo.save(p);
 			}
 		}
+		
 		return product;
 	}
 	public boolean deleteProduct(int id) {
 		Product searchP=null;
-		for (Product p : products) {
+		for (Product p : repo.findAll()) {
 			if(p.getId()==id) 
 				searchP=p;
 		}
 		if(searchP!=null) {
-			products.remove(searchP);
+			repo.delete(searchP);
 			return true;
 		}
 		else {
