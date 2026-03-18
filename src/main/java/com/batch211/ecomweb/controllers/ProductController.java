@@ -31,6 +31,7 @@ public class ProductController {
 	
 	@PostMapping("/")
 	public Product postProduct(@RequestBody Product product) {
+		System.out.println(product);
 		return service.addProduct(product);
 	}
 	

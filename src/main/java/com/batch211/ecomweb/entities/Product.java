@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Product implements Comparable<Product>{     
@@ -18,13 +20,27 @@ public class Product implements Comparable<Product>{
 	
 	@Column(name = "price")
 	private Double price;
+	
+	@ManyToOne
+	@JoinColumn(name = "brand_id")
+	private Brand brand;
+	
+	
+	
+	public Brand getBrand() {
+		return brand;
+	}
+	public void setBrand(Brand brand) {
+		this.brand = brand;
+	}
 	public Product() {
 		// TODO Auto-generated constructor stub
 	}
-	public Product(Long id,String name,Double price) {
+	public Product(Long id,String name,Double price,Brand brand) {
 		this.id = id;
 		this.name = name;
 		this.price = price;
+		this.brand = brand;
 	}
 	
 	public Double getPrice() {
